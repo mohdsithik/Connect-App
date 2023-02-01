@@ -1,6 +1,8 @@
 import React,{useEffect,useState} from "react";
 import { View,Text,FlatList,StyleSheet,TouchableOpacity,Pressable } from "react-native";
 import axios from "axios";
+import { FlashList } from "@shopify/flash-list";
+import TopBar from "./TopBar";
 
 const PostList=({navigation})=>{
 
@@ -17,6 +19,7 @@ const PostList=({navigation})=>{
         return (
 
             <View>
+                
                  <Pressable onPress={()=> navigation.navigate("PostDetails",{ID : itemData.item})}>
                 <View style={styles.list}>
                     <Text style={styles.title}>{itemData.item.title}</Text>
@@ -29,15 +32,20 @@ const PostList=({navigation})=>{
     }
 
     return(
+        
+         
         <View style={{backgroundColor:"#FFFFB0",flex:1}}>
-             <FlatList data={list} renderItem={renderItem} />
+              <TopBar value={'PostList'}  onPress={() => navigation.popToTop()}/>
+              <FlashList data={list} renderItem={renderItem} estimatedItemSize={200}  />
         </View>
+     
+        
     )
 }
 const styles=StyleSheet.create({
     list:{
         backgroundColor:"white",
-        margin:18,
+        margin:20,
         elevation:10,
         shadowColor: 'black',
         borderRadius:10
@@ -48,7 +56,7 @@ const styles=StyleSheet.create({
         fontSize:16
     },
     body:{
-        margin:6,
+        margin:10,
         color:'black',
     }
 })

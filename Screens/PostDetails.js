@@ -10,10 +10,12 @@ import {
    
   Button
 } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
+import TopBar from './TopBar';
 import axios from 'axios';
 import Modal from 'react-native-modal';
 
-const PostDetails = ({route}) => {
+const PostDetails = ({route,navigation}) => {
   const [postComments, setPostComments] = useState([]);
   const [modalVisible,setModalVisible]=useState(false);
   const [num,setNum]=useState([])
@@ -30,6 +32,7 @@ const PostDetails = ({route}) => {
   const renderItem = ({item}) => {
     return (
       <View>
+        
         <TouchableOpacity onPress={()=>{setModalVisible(true),setNum(item)}} >
         <Text style={styles.nameIcon}>{item.name[0]} </Text>
         <Text style={styles.nameList}>{item.name.split(" ")[0]}</Text>
@@ -47,6 +50,7 @@ const PostDetails = ({route}) => {
 
   return (
     <View style={{backgroundColor: '#FFFFB0', flex: 1}}>
+      <TopBar value={'PostDetails'}  onPress={() => navigation.popToTop()}/>
       <View style={styles.Container}>
         <Text style={styles.title}>{mainObject.title}</Text>
         <Text style={styles.body}>{mainObject.body}</Text>
@@ -54,8 +58,10 @@ const PostDetails = ({route}) => {
           <Text style={styles.details}>Comments</Text>
  
         </View>
+       
 
-        <FlatList data={postComments} renderItem={renderItem} />
+        <FlashList data={postComments} renderItem={renderItem} estimatedItemSize={200}  />
+       
         <Modal
          visible={modalVisible}
         animationType="slide"

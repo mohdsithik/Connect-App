@@ -1,6 +1,8 @@
 import React,{useState,useEffect} from "react";
 import { View,Text,FlatList,StyleSheet,Pressable } from "react-native";
 import axios from "axios";
+import TopBar from "./TopBar";
+import { FlashList } from "@shopify/flash-list";
  const AlbumList=({navigation})=>{
     const [albumData,setAlbumData]=useState([]);
     useEffect(()=>{
@@ -20,15 +22,17 @@ import axios from "axios";
 
     return(
         <View style={styles.container}>
+            <TopBar value={'AlbumList'}   onPress={() => navigation.goBack("Landing")}/>
             
-            <FlatList data={albumData} renderItem={renderItem} numColumns={2} />
+            <FlashList data={albumData} renderItem={renderItem} numColumns={2} estimatedItemSize={200}/>
+            
         </View>
     )
  }
 const styles=StyleSheet.create({
     albumData:{
         backgroundColor:'white',
-        padding:50,
+        padding:58,
         margin:15,
         borderRadius:10,
         elevation:10
